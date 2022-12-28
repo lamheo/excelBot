@@ -28,7 +28,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/excel_bot
     username: postgres
-    password: @269Koidira
+    password: "@269Koidira"
   security:
     oauth2:
       resourceserver:
