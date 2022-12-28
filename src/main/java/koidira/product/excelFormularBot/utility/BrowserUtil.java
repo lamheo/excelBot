@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Component;
 import java.io.File;
+import org.apache.commons.io.FileUtils;
 import java.time.Duration;
 // import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.OutputType;
@@ -58,8 +59,23 @@ public class BrowserUtil {
         emailInput.sendKeys(username);
         WebElement passwordInput = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='password']")));
         passwordInput.sendKeys(password);
+        File SrcFile=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        File DestFile=new File("/home/pham/mySpace/excelFormularBot/java/excelFormularBot/testing/Temp.png");
+
+              //Copy file at destination
+        FileUtils.copyFile(SrcFile, DestFile);
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Login']"))).click();
+        SrcFile=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        DestFile=new File("/home/pham/mySpace/excelFormularBot/java/excelFormularBot/testing/Temp2.png");
+
+              //Copy file at destination
+        FileUtils.copyFile(SrcFile, DestFile);
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Yes']"))).click();
+        SrcFile=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        DestFile=new File("/home/pham/mySpace/excelFormularBot/java/excelFormularBot/testing/Temp3.png");
+
+              //Copy file at destination
+        FileUtils.copyFile(SrcFile, DestFile);
       } catch (Exception e) {
         System.out.print(e);
       }
@@ -85,7 +101,11 @@ public class BrowserUtil {
       Thread.sleep(2000);
 
       WebElement responseField = textAreaFields.get(1);
+       File SrcFile=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        File DestFile=new File("/home/pham/mySpace/excelFormularBot/java/excelFormularBot/testing/TempAll.png");
 
+              //Copy file at destination
+        FileUtils.copyFile(SrcFile, DestFile);
       System.out.print("Respone: ");
       String response = responseField.getAttribute("value");
       System.out.print(response);
@@ -93,6 +113,7 @@ public class BrowserUtil {
     }
 
     public String requestDriver(WebDriver driver, boolean isExcel, boolean isGenerate, String request) throws Exception {
+      driver.findElement(By.xpath("//div[text()='Formulas']")).click();
       if (isExcel) {
         driver.findElement(By.xpath("//button[text()='Excel']")).click();
       } else {
@@ -120,7 +141,11 @@ public class BrowserUtil {
       Thread.sleep(2000);
 
       WebElement responseField = textAreaFields.get(1);
+       File SrcFile=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        File DestFile=new File("/home/pham/mySpace/excelFormularBot/java/excelFormularBot/testing/TempAll.png");
 
+              //Copy file at destination
+        FileUtils.copyFile(SrcFile, DestFile);
       System.out.print("Respone: ");
       String response = responseField.getAttribute("value");
       System.out.print(response);
