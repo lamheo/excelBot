@@ -16,21 +16,15 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.time.OffsetDateTime;
 
-import org.openqa.selenium.WebDriver;
-
 
 import koidira.product.excelFormularBot.entity.Request;
 import koidira.product.excelFormularBot.dto.request.RequestDto;
 import koidira.product.excelFormularBot.dto.request.RequestCreationDto;
 import koidira.product.excelFormularBot.repository.RequestRepo;
-import koidira.product.excelFormularBot.utility.BrowserUtil;
+import koidira.product.excelFormularBot.utility.BrowserControllerUtil;
 
 import koidira.product.excelFormularBot.dto.response.ResponseDto;
 import koidira.product.excelFormularBot.dto.response.ResponseCreationDto;
-
-
-import koidira.product.excelFormularBot.utility.BrowserUtil;
-
 
 @Service
 public class RequestService {
@@ -39,9 +33,9 @@ public class RequestService {
   private final RequestRepo requestRepo;
   private final ModelMapper modelMapper;
   private final ResponseService responseService;
-  private final BrowserUtil browserUtil;
+  private final BrowserControllerUtil browserUtil;
 
-  public RequestService(RequestRepo requestRepo, ModelMapper modelMapper, ResponseService responseService, BrowserUtil browserUtil) {
+  public RequestService(RequestRepo requestRepo, ModelMapper modelMapper, ResponseService responseService, BrowserControllerUtil browserUtil) {
     this.requestRepo = requestRepo;
     this.modelMapper = modelMapper;
     this.responseService = responseService;
@@ -106,7 +100,7 @@ public class RequestService {
     return request.getId();
   }
 
-  public ResponseDto getResponse(WebDriver webDriver, RequestCreationDto requestCreationDto) throws Exception {
+  public ResponseDto getResponse(RequestCreationDto requestCreationDto) throws Exception {
     //save request
     //get response
     //save response
@@ -117,7 +111,7 @@ public class RequestService {
     boolean isGenerate = requestCreationDto.isGenerate();
     String request = requestCreationDto.getRequest();
 
-    String response = browserUtil.requestDriver(webDriver, isExcel, isGenerate, request);
+    String response = browserUtil.requestDriver(isExcel, isGenerate, request);
 
     ResponseCreationDto responseCreationDto = ResponseCreationDto.builder()
       .requestId(requestDto.getId())

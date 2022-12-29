@@ -19,15 +19,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
 import javax.security.auth.login.LoginException;
+import javax.annotation.PreDestroy;
 
 @Component
-public class BrowserUtil {
+public class BrowserControllerUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BrowserUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BrowserControllerUtil.class);
+    private final WebDriver driver;
     
     @Autowired
-    public BrowserUtil() {
-
+    public BrowserControllerUtil(WebDriver driver) {
+      this.driver = driver;
     }
 
     public WebDriver init()  {
@@ -48,11 +50,11 @@ public class BrowserUtil {
       return driver;
     }
 
-    public String getCurrentUrl(WebDriver driver) {
+    public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 
-    public void doLogin(WebDriver driver, String username, String password) {
+    public void doLogin(String username, String password) {
       try {
         WebElement emailInput = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='email']")));
         emailInput.sendKeys(username);
@@ -65,7 +67,7 @@ public class BrowserUtil {
       }
     }
 
-    public String ask(WebDriver driver) throws Exception {
+    public String ask() throws Exception {
       String question = "SUm a1 and b1";
       driver.findElement(By.xpath("//button[text()='Excel']")).click();
       driver.findElement(By.xpath("//button[text()='Generate']")).click();
@@ -91,7 +93,7 @@ public class BrowserUtil {
       return response;
     }
 
-    public String requestDriver(WebDriver driver, boolean isExcel, boolean isGenerate, String request) throws Exception {
+    public String requestDriver(boolean isExcel, boolean isGenerate, String request) throws Exception {
       driver.findElement(By.xpath("//div[text()='Formulas']")).click();
       if (isExcel) {
         driver.findElement(By.xpath("//button[text()='Excel']")).click();
@@ -126,5 +128,9 @@ public class BrowserUtil {
       return response;
     }
 
-  
+    @PreDestroy
+    public void cleanUp() {
+        // Perform cleanup tasks here
+        System.out.print("clean up here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
 }
