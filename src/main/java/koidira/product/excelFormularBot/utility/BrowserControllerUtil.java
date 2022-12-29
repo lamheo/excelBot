@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.time.Duration;
 // import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.By;
@@ -42,7 +43,8 @@ public class BrowserControllerUtil {
         "--disable-gpu",
         "--disable-dev-shm-usage",
         "--window-size=1920,1080",
-        "--headless"
+        "--headless",
+        "--disable-popup-blocking"
       );
 
       WebDriver driver = new ChromeDriver(options);
@@ -56,12 +58,29 @@ public class BrowserControllerUtil {
 
     public void doLogin(String username, String password) {
       try {
+        driver.get("https://excelformulabot.com/login?status=login");
+        // driver.get("https://gitlab.com/");
+
+        TakesScreenshot scrShot = ((TakesScreenshot) driver);
+        File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+        File DestFile = new File("/home/pham/mySpace/excelFormularBot/java/excelFormularBot/testing/evi.png");
+        System.out.print("teakescreen");
+        FileUtils.copyFile(SrcFile, DestFile);
+        
         WebElement emailInput = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='email']")));
         emailInput.sendKeys(username);
         WebElement passwordInput = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='password']")));
         passwordInput.sendKeys(password);
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Login']"))).click();
+        SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+        DestFile = new File("/home/pham/mySpace/excelFormularBot/java/excelFormularBot/testing/evi2.png");
+        System.out.print("teakescreen");
+        FileUtils.copyFile(SrcFile, DestFile);
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Yes']"))).click();
+        SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+        DestFile = new File("/home/pham/mySpace/excelFormularBot/java/excelFormularBot/testing/evi3.png");
+        System.out.print("teakescreen");
+        FileUtils.copyFile(SrcFile, DestFile);
       } catch (Exception e) {
         System.out.print(e);
       }
@@ -132,5 +151,9 @@ public class BrowserControllerUtil {
     public void cleanUp() {
         // Perform cleanup tasks here
         System.out.print("clean up here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+
+    public void quit() {
+      driver.quit();
     }
 }

@@ -26,9 +26,9 @@ spring:
     schemas: excel_bot
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/dev_env
+    url: jdbc:postgresql://ep-young-silence-913702.ap-southeast-1.aws.neon.tech/dev_env
     username: postgres
-    password: admin
+    password: iH5hsFBk1JSX
   security:
     oauth2:
       resourceserver:

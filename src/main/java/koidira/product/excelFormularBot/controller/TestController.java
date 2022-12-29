@@ -25,13 +25,17 @@ public class TestController {
     public String init() throws Exception {
         // this.driver = browserUtil.init();
         // this.driver.get("https://excelformulabot.com/login?status=login");
+        System.out.print("inittttreirwo");
         browserUtil.doLogin("nt91600@email.vccs.edu", "Koidira@269");
-        return browserUtil.getCurrentUrl();
+        String str = browserUtil.getCurrentUrl();
+        browserUtil.quit();
+        return str;
     }
 
     @PostMapping("/request")
     public String request() throws Exception {
-        return browserUtil.ask();
+        System.out.print("HIHIHIHIH");
+        return browserUtil.getCurrentUrl();
     }
 
 }
